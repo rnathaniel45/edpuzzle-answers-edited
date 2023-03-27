@@ -43,21 +43,24 @@ function postAttempt(csrf, data) {
   var teacher_assignment_id = data.teacherAssignmentId;
   var referrer = "https://edpuzzle.com/assignments/"+ teacher_assignment_id +"/watch";;
   var url2 = "https://edpuzzle.com/api/v4/media_attempts/" + id + "/watch";
-
-  var content = {"timeIntervalNumber": 10};
-  var headers = [
-    ['accept', 'application/json, text/plain, */*'],
-    ['accept_language', 'en-US,en;q=0.9'],
-    ['content-type', 'application/json'],
-    ['x-csrf-token', csrf],
-    ['x-edpuzzle-referrer', referrer],
-    ['x-edpuzzle-web-version', opener.__EDPUZZLE_DATA__.version]
-  ];
   
-  httpGet(url2, function(){
-    button.value = "Video skipped successfully.";
-    opener.location.reload();
-  }, headers, "POST", JSON.stringify(content));
+  for (let i = 0; i < 11; ++i) {
+    var content = {"timeIntervalNumber": i};
+    var headers = [
+      ['accept', 'application/json, text/plain, */*'],
+      ['accept_language', 'en-US,en;q=0.9'],
+      ['content-type', 'application/json'],
+      ['x-csrf-token', csrf],
+      ['x-edpuzzle-referrer', referrer],
+      ['x-edpuzzle-web-version', opener.__EDPUZZLE_DATA__.version]
+    ];
+
+    httpGet(url2, function(){
+      button.value = "Video skipped successfully.";
+    }, headers, "POST", JSON.stringify(content));
+  }
+  
+  opener.location.reload();
 }
 
 init();
